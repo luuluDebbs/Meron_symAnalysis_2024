@@ -1,0 +1,491 @@
+---
+title: "eDNA-analysis"
+author: "Meron G. Tekle"
+date: "2024-06-04"
+output:
+  html_document: default
+  pdf_document: default
+---
+# This is the rmarkdown document for analysing environmental samples
+
+
+###  Load required packages for the analysis
+
+```{r}
+library(tidyverse)
+library(qiime2R)
+library(microbiome)
+library(phyloseq)
+library(stringr)
+library(forcats)
+library(reshape2)
+library(ggraph)
+library(igraph)
+library(tidygraph)
+library(ggalt)
+library(vegan)
+```
+# Importing our data from qiime2 output
+
+### Import .qza files from qiime2 into R using the qiime2R package and create a phyloseq object
+```{r}
+physeq <- qza_to_phyloseq(
+  features = "../qiime_outputs/table.qza",
+  tree = "../qiime_outputs/rooted_tree.qza",
+  "../qiime_outputs/blast-taxonomy-results-97.qza",
+  metadata = "../qiime_outputs/sample-metadata.txt")
+```
+
+### use the microbiome package to create tible files for feature table and taxonomy table which will be merged later to make analysis easier down the road
+```{r}
+otu.tib <- otu_tibble(physeq, column.id = "FeatureID") #retrieves our feature table
+tax.tib <- tax_tibble(physeq, column.id = "FeatureID") #retrieves our taxonomic assignment table
+sample_tib <- sample_tibble(physeq, column.id = "SampleID") #retrieves our sample metadata
+
+```
+
+### Then we will merge all these tables using shared columns such as "SampleID" and "featureID"
+```{r}
+dat <- otu.tib %>% 
+  pivot_longer(-FeatureID, names_to = "SampleID", values_to = "count") #creates a file with the columns FeatureID (ASV id given by qiime), SampleID (Sample names) and Count(abundance of a feature inside a sample). Now it is easier to join with other tables
+```
+
+### Use left_join to add taxa table, metadata
+```{r}
+dat <- dat %>% 
+  left_join(tax.tib, by="FeatureID")
+
+dat <- dat %>% 
+  left_join(sample_tib, by = "SampleID")
+
+#dat
+```
+
+### Now to we add shannon index and PCoA results to the data table, but first we import both shannon and PCoA results
+```{r}
+shannon <- read_qza("../qiime_outputs/shannon_vector.qza") #import from qiime using qiime2R
+
+shannon <- shannon$data %>% rownames_to_column("SampleID") #make it easier to merge to "dat" using "SampleID"
+
+dat <- dat %>% 
+  left_join(shannon, by = "SampleID") 
+
+#dat
+
+```
+
+### We also add a column for observed features
+```{r}
+obs_feat <- read_qza("../qiime_outputs/observed_features_vector.qza") #import from qiime using qiime2R
+
+obs_feat <- obs_feat$data %>% rownames_to_column("SampleID") #make it easier to merge to "dat" using "SampleID"
+
+dat <- dat %>% 
+  left_join(obs_feat, by = "SampleID") 
+
+#dat
+```
+
+
+### Now we do the same with PCoA results
+
+```{r}
+uwunifrac<-read_qza("../qiime_outputs/unweighted_unifrac_pcoa_results.qza") #import unweighted unifrac results from qiime2
+
+unifrac_modify<- uwunifrac$data$Vectors %>% 
+  select(SampleID, PC1, PC2)  #we select only two dimensions because we cannot effectively show more dimension on paper
+
+dat <- dat %>% 
+  left_join(unifrac_modify, by = "SampleID")
+
+#dat
+```
+
+### Now we remove the accession numbers from our Species names and rename them as ITS2types
+
+```{r}
+dat <- dat %>% 
+  mutate(ITS2_types= (str_replace_all(pattern = '-.*', replacement = "", Species.x)))
+```
+
+********************************************************************************************************************
+
+# Part II - Analysis - visulaize alpha and beta diversity
+
+
+## But before we create plots, lets create a custom theme. This will make our code cleaner
+
+```{r}
+my_theme_alpha <-  theme(panel.border = element_rect(colour = "black", fill = NA),
+                     panel.background = element_blank(),
+                     panel.grid = element_blank(),
+                     axis.text  = element_text(size = 10), 
+                     axis.text.x = element_text(angle = 0),
+                     axis.title = element_text(size = 20),
+                     strip.background = element_blank(),
+                     strip.text = element_text(size = 10),
+                     axis.line.x = element_line(size = 0.5),
+                     axis.line.y = element_line(size = 0.5),
+                     legend.position = "right",
+                     legend.text =element_text(size = 5))
+
+```
+
+# Create a Shannon diversity Box Plot
+### But before lets create a dataframe with each sample coressponding to a unique sahnnon diversity value
+```{r}
+dat_shannon <- dat %>% 
+  group_by(SampleID, Type, Depth) %>% 
+  summarise(Richness = unique(shannon_entropy)) %>% 
+  drop_na(Richness)
+
+#dat_shannon
+
+```
+
+## Plot a shannon boxplot with points for depth
+```{r}
+dat_shannon$Type <- factor(dat_shannon$Type, levels = c("Open Water", "Coral Reef Surrounding Water", "Sediment")) #we order the sample to better compare them in the plot
+
+dat_shannon$Type <- str_wrap(dat_shannon$Type, width = 10) #this allows us to wrap long labels
+
+fig3a <- dat_shannon %>% 
+  drop_na(Richness) %>% #removes values from samples not included in analysis because of sampling depth
+  ggplot(aes(Type, Richness)) +
+  geom_boxplot(position = "dodge", show.legend = F)+
+  geom_jitter(aes(fill = Depth), shape = 21, width=0.2, height = 0, size = 2.5)+
+  xlab(NULL)+
+  ylab("Shannon Diversity")+
+  my_theme_alpha+
+  scale_fill_gradient(low = "white", high = "darkblue")+
+  my_theme_alpha
+
+fig3a
+
+#fig3a <- ggsave("../figures/fig3a.png", height = 4, width = 5, device= "png")
+```
+
+## summary statistics for alpha diversity
+```{r}
+dat_shannon %>% 
+  group_by(Type) %>% 
+  summarize(mean_richness = mean(Richness, na.rm = T))
+```
+
+
+## Create an observed features box plot
+```{r}
+
+dat_obs <- dat %>% 
+  filter(!is.na(observed_features)) %>%
+  ggplot(aes(Location, observed_features, color = Type)) +
+  geom_point(size = 3)+
+  xlab(NULL)+
+  ylab("Observed Features")+
+  my_theme_alpha
+  #scale_fill_gradient(low = "white", high = "darkblue")
+
+figure3b <- dat_obs
+
+figure3b
+
+fig3b <- ggsave("../figures/figure3b.png", height = 4, width = 5, device= "png")
+```
+
+## Create a PCoA ordination based on unweighted unifrac distances
+### create a theme for this graph
+```{r}
+ my_theme_pcoa <-  theme(panel.border = element_rect(colour = "black", fill = NA),
+                     panel.background = element_blank(),
+                     panel.grid = element_blank(),
+                     axis.text  = element_text(size = 10), 
+                     axis.text.x = element_text(angle = 0),
+                     axis.title = element_text(size = 20),
+                     strip.background = element_blank(),
+                     strip.text = element_text(size = 10),
+                     axis.line.x = element_line(size = 0.5),
+                     axis.line.y = element_line(size = 0.5),
+                     legend.position = "right",
+                     legend.text =element_text(size = 5))
+
+```
+
+
+```{r}
+dat_pcoa <- dat
+
+fig4 <- dat_pcoa %>%
+  drop_na() %>% #drops na values
+  mutate(biomes = fct_relevel(Type, c("Open Water", "Coral Reef Surrounding Water", "Sediment"))) %>% 
+  mutate(encircle  = paste(biomes, "_", Region)) %>% 
+  ggplot(aes(x=PC1, y=PC2, color= Type, shape = Region))+
+  geom_point(alpha=0.2, size = 3, show.legend = F) +
+  geom_encircle(aes(fill = encircle),alpha = 0.2, s_shape = 1, expand  = 0, show.legend = F)+
+  xlab(paste("PC1: ", round(100*uwunifrac$dat$ProportionExplained[1]), "%")) +
+  ylab(paste("PC2: ", round(100*uwunifrac$data$ProportionExplained[2]), "%"))+
+  scale_shape_discrete()+
+  scale_color_manual(values = c("#117744", "#DDAA77", "#0000FF", "#DDDD77"))+
+  scale_fill_manual(values= c( "#117744", "#DDAA77", "#0000FF", "#DDDD77" , "#0070FF"), name = "Biomes")+
+  my_theme_pcoa
+
+fig4
+  
+#fig4 <- ggsave("../figures/fig4.png", height = 4, width = 5, device= "png")
+```
+
+## create a theme for the composition plot
+```{r}
+my_theme_bar <-  theme(panel.border = element_rect(colour = "black", fill = NA),
+                     panel.background = element_blank(),
+                     panel.grid = element_blank(),
+                     axis.text  = element_text(size = 8), 
+                     axis.text.x = element_text(angle = 90, face = "italic"),
+                     axis.text.x.top = element_text(size=5),
+                     axis.title = element_text(size = 20),
+                     strip.background = element_blank(),
+                     strip.text = element_text(size = 10),
+                     axis.line.x = element_line(size = 0.5),
+                     axis.line.y = element_line(size = 0.5),
+                     legend.position = "right",
+                     legend.text =element_text(size =8, face = "italic"))
+```
+
+## create a composition plot by genus
+### But first lets order the names and plot the 10 most observed symbiont genera, because we are not good with colors 
+```{r}
+total_top_counts <- dat %>% #summarize and arrange the total count of each genus across all samples
+  group_by(Genus.x) %>% 
+  summarize(total_top_counts = sum(count)) %>% 
+  arrange(desc(total_top_counts))
+
+top_10_genus <- total_top_counts %>% #get the 10 most abundant genus by count
+  top_n(10,wt=total_top_counts) %>% 
+  pull(Genus.x)
+
+filtered_dat <- dat %>% #filter the data to get the 10 most abundant genera  
+  filter(Genus.x %in% top_10_genus)
+
+filtered_dat<- filtered_dat %>% 
+  group_by(Genus.x) %>% 
+  mutate(proportion = count / sum(count))
+
+filtered_dat
+```
+
+
+```{r}
+
+filtered_dat$Type <- factor(filtered_dat$Type, levels = c("Open Water", "Coral Reef Surrounding Water", "Sediment")) #we order the sample types to better compare them in the composition plot
+
+filtered_dat$Type <- str_wrap(filtered_dat$Type, width = 12) #this allows us to wrap long labels
+
+fig2 <- filtered_dat %>% 
+  ggplot(aes(Location, proportion)) +
+  facet_grid(~Type , scales = "free_x", space = "free_x")+
+  geom_bar(aes (fill= Genus.x), stat = "identity", position = "fill", width = 0.9)+
+  scale_fill_discrete(name = NULL)+
+  scale_fill_manual(values= c("#00008F", "#774411", "#771122", "#CC99BB", "#117744", "#DDAA77", "#0000FF", "#DDDD77" , "#0070FF"), name = "Genera" )+
+  scale_y_continuous(name = "Relative abundance",
+                     labels = scales::percent) +
+  labs(x = NULL)+
+  my_theme_bar  
+
+fig2
+
+#fig2 <- ggsave("../figures/fig2.png", height = 4, width = 5, device= "png")
+```
+********************************************************************************************************************
+
+# Summary statitsics and pie charts
+
+### feature count per sample
+```{r}
+dat %>% group_by(SampleID) %>% 
+  summarise(feature_count = sum(count)) %>% 
+  print(n=5)
+```
+
+### summarise data to calculate the abundance of each ASV
+```{r}
+ITS2_sum_by_species <- dat %>% select(Type, count, ITS2_types) %>% 
+  group_by(ITS2_types) %>% 
+  summarize(species_count = sum(count)) %>% 
+  mutate(species_percent = species_count/sum(species_count) * 100)
+
+ITS2_sum_by_species
+```
+
+##  Create a Pie-Chart to complement the Composiiton plot wrapped by Type
+### Lets make a new cleaned dataframe for a pichart
+```{r}
+dat_pie <- filtered_dat %>% 
+  arrange(desc(Genus.x))
+  
+```
+
+
+
+
+
+```{r}
+fig2b <- filtered_dat %>% 
+  ggplot(aes("", proportion, fill = Genus.x )) +
+  facet_wrap(~Type)+
+  geom_bar(stat = "identity", position = "fill", width = 1)+
+  coord_polar("y", start = 0)+
+  #geom_text(aes(y= ypos), color = "white", size=6)+
+  scale_fill_manual(values= c("#00008F", "#774411", "#771122", "#CC99BB",
+                              "#117744", "#DDAA77", "#0000FF", "#DDDD77" , "#0070FF"), 
+                    name = "Genera" )+
+  scale_y_continuous(name = "Relative abundance",
+                     labels = scales::percent) +
+  theme_void()+
+  theme(legend.position = "none")
+
+fig2b
+
+#fig2b <- ggsave("../figures/fig2b.png", height = 4, width = 5, device= "png")
+```
+
+
+## Draw Venn diagram
+
+
+********************************************************************************************************************
+# Multivariate test analysis
+
+## PERMANOVA and betadisper on unweighted unifrac distance, we will first do a general test on all the samples to have an idea
+
+### But we will later need to compare samples from open ocean and coral reef area separately.
+
+```{r}
+uwuni <- phyloseq::distance(physeq, method = "unifrac", weighted = FALSE)  #unweighted unifrac
+
+sampleddf <- data.frame(sample_data(physeq))
+
+adonis2(uwuni ~ Type * Region * Location , data = sampleddf)
+```
+
+## Now check for dispersion using betadisper since all our factors seem to be significant
+###lets check type first
+```{r}
+betatype <- betadisper(uwuni, sampleddf$Type)
+anova(betatype)
+```
+## Sample type passed the dispersion test, check exactly where the diffrence is using tuckeyHSD test
+
+```{r}
+TukeyHSD(betatype)
+```
+
+### it looks like OO and CRSW are very diffreng and S and CRSW not so different, this could be becasue they were
+### sampled from the same area and near coral reefs
+
+## Do the same test for Location and Region
+
+```{r}
+betalocation <- betadisper(uwuni, sampleddf$Location)
+anova(betalocation)
+```
+
+```{r}
+adonis2(uwuni ~ Region, data = sampleddf)
+```
+
+```{r}
+betaregion <- betadisper(uwuni, sampleddf$Region)
+anova(betaregion)
+```
+
+```{r}
+TukeyHSD(betaregion)
+```
+
+```{r}
+TukeyHSD(betalocation)
+```
+### it lloks like seto inland sea/ Hiroshima is diffrent form other region
+
+
+### Because our sampling was not even across regions,filter open ocean samples from environment to compare latitiude (Region)
+```{r}
+ps_filt_oo <- physeq %>% 
+  subset_samples(Type != "Sediment") %>% 
+  subset_samples(Type != "Coral Reef Surrounding Water") %>% 
+  subset_samples(sample_sums(physeq) > 0) %>% 
+  filter_taxa(function(x) sum(x) > 0, TRUE)
+```
+
+### Now create a ditance matrix and perform adonis2
+```{r}
+uwuni_env <- phyloseq::distance(ps_filt_oo, method = "unifrac", weighted = FALSE)
+sampleddf_oo <- data.frame(sample_data(ps_filt_oo))
+```
+### 
+```{r}
+adonis2(uwuni_env ~ Depth + Region , data = sampleddf_oo)
+```
+## Depth is not significant but region/latitude is, check Region for within sample dispersion
+
+```{r}
+betaregion_oo <- betadisper(uwuni_env, sampleddf_oo$Region)
+anova(betaregion_oo)
+```
+
+## Do a multivariate analysis of depth for samples collected from coral reeefs surrounding water and sediment 
+
+```{r}
+ps_filt_crs <- physeq %>% 
+  subset_samples(Type != "Open Water") %>% 
+  subset_samples(sample_sums(physeq) > 0) %>% 
+  filter_taxa(function(x) sum(x) > 0, TRUE)
+```
+
+```{r}
+uwuni_crs <- phyloseq::distance(ps_filt_crs, method = "unifrac", weighted = FALSE)
+sampleddf_crs <- data.frame(sample_data(ps_filt_crs))
+```
+
+
+```{r}
+adonis2(uwuni_crs ~ Type + Depth, data = sampleddf_crs)
+
+```
+
+## Since both Depth and Type are significant perform a betadispersion test
+```{r}
+betadepth_crs <- betadisper(uwuni_crs, sampleddf_crs$Depth)
+anova(betadepth_crs)
+```
+```{r}
+betatype_crs <- betadisper(uwuni_crs, sampleddf_crs$Type)
+anova(betatype_crs)
+```
+### There for type is more important here too. Depth did not pass our dispersion test
+
+
+********************************************************************************************************************
+
+# Conclusion
+
+Sample type and latitude have a stronger effect on symbiont community diversity, while the difference seen because of depth can be explained by dispersion within groups. Therefore, sample origin and latitude influence Symbiodiniaceae and non-Symbiodiniceae communities in seawater and sediment, while depth has a limited effect.
+
+Generally, the biggest difference between the sample types seen in all our environmental samples was between open ocean water (OO) and coral reef surrounding water (CRSW) (Tuckey HSD test, p adj = 0.0002***). The most similar samples were coral reef sediment (S) and CRSW (Tuckey HSD test, p adj = 0.14). Moreover, Seto Inland Sea (Hiroshima) significantly differed from other sites (Tukey HSD test). It had the highest observed features (see Figure 3) but the lowest number of Symbiodiniceae, hinting that it might be high in dinoflagellate diversity.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

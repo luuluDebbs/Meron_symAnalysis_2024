@@ -1,0 +1,47 @@
+sample-id	index1	index2	Sample_Project	Type	Depth	Location	Island	Region	Genus	Species	Year
+#q2:types	categorical	categorical	categorical	categorical	numeric	categorical	categorical	categorical	categorical	categorical	numeric
+SW20-3	TCTTCCGCTACT	AGCCGGCACATA	Meron	Coral Reef Surrounding Water	20	Sesoko	Okinawa	Central Ryukyus	n/a	n/a	2023
+Yakushima-S3a	CGTCCGAAATAC	ACACTAGATCCG	NatGeo	Open Water	1	Yakushima	Yakushima	North Ryukyus	n/a	n/a	2023
+Amami-S1a	GACTCTTGGCAA	GCTCGAAGATCG	NatGeo	Open Water	1	Amami	Amami	North Ryukyus	n/a	n/a	2023
+Miyako-D1a	ACTCACGGTATG	AGCCGGCACATA	NatGeo	Open Water	40	Miyako	Miyako	Yaeyama	n/a	n/a	2023
+SMG-20ma	TGTTATCGCACA	GCTCGAAGATCG	Meron	Sediment	20	Sesoko	Okinawa	Central Ryukyus	n/a	n/a	2023
+SMG-20m	TCGTCGATAATC	GCTCGAAGATCG	Meron	Sediment	20	Sesoko	Okinawa	Central Ryukyus	n/a	n/a	2023
+SMG-40m	TATCAGGTGTGC	AGCCGGCACATA	Meron	Sediment	40	Sesoko	Okinawa	Central Ryukyus	n/a	n/a	2023
+Yakushima-D1	GCTTCGGTAGAT	ACACTAGATCCG	NatGeo	Open Water	40	Yakushima	Yakushima	North Ryukyus	n/a	n/a	2023
+Yakushima-S1	CTTACACCAAGT	ACACTAGATCCG	NatGeo	Open Water	1	Yakushima	Yakushima	North Ryukyus	n/a	n/a	2023
+Yakushima-S2	TATCAGGTGTGC	GCTCGAAGATCG	NatGeo	Open Water	1	Yakushima	Yakushima	North Ryukyus	n/a	n/a	2023
+Yakushima-S3	TGTAATTGTCGC	GCTCGAAGATCG	NatGeo	Open Water	1	Yakushima	Yakushima	North Ryukyus	n/a	n/a	2023
+Yakushima-S4	AATGGAGCATGA	GCTCGAAGATCG	NatGeo	Open Water	1	Yakushima	Yakushima	North Ryukyus	n/a	n/a	2023
+Amami-D3	TCTGTTGCTCTC	AGCCGGCACATA	NatGeo	Open Water	40	Amami	Amami	North Ryukyus	n/a	n/a	2023
+Amami-D4	AGTTCCCGAGTA	AGCCGGCACATA	Meron	Open Water	40	Amami	Amami	North Ryukyus	n/a	n/a	2023
+Amami-S1	AGCCTAAGCACG	AGCCGGCACATA	NatGeo	Open Water	1	Amami	Amami	North Ryukyus	n/a	n/a	2023
+Amami-S2	ATACCTTCGGTA	AGCCGGCACATA	NatGeo	Open Water	1	Amami	Amami	North Ryukyus	n/a	n/a	2023
+Amami-S3	ACCACATACATC	CGCAAATTCGAC	NatGeo	Open Water	1	Amami	Amami	North Ryukyus	n/a	n/a	2023
+Miyako-S2	AATGTCCGTGAC	CGCAAATTCGAC	NatGeo	Open Water	1	Miyako	Miyako	Yaeyama	n/a	n/a	2023
+Miyako-S3	AACACAAGGAGT	GCTCGAAGATCG	NatGeo	Open Water	1	Miyako	Miyako	Yaeyama	n/a	n/a	2023
+Miyako-S4	TACTTCGCTCGC	CCAAGTCTTACA	NatGeo	Open Water	1	Miyako	Miyako	Yaeyama	n/a	n/a	2023
+Miyako-D1	ATTGGGCTAGGC	CGCAAATTCGAC	NatGeo	Open Water	40	Miyako	Miyako	Yaeyama	n/a	n/a	2023
+SMG-01	TGTTATCGCACA	GCTCGAAGATCG	Meron	Sediment	20	Sesoko	Okinawa	Central Ryukyus	n/a	n/a	2023
+SMG-02	TCGTCGATAATC	GCTCGAAGATCG	Meron	Sediment	20	Sesoko	Okinawa	Central Ryukyus	n/a	n/a	2023
+SMG-02-2	GTCTACACACAT	AGCCGGCACATA	Meron	Sediment	20	Sesoko	Okinawa	Central Ryukyus	n/a	n/a	2023
+SMG-03	TACTTCGCTCGC	GCTCGAAGATCG	Meron	Sediment	20	Sesoko	Okinawa	Central Ryukyus	n/a	n/a	2023
+SMG-04	AACACAAGGAGT	CGCAAATTCGAC	Meron	Sediment	20	Sesoko	Okinawa	Central Ryukyus	n/a	n/a	2023
+SMG-05-2	ATACTTCGCAGG	AGCCGGCACATA	Meron	Sediment	40	Sesoko	Okinawa	Central Ryukyus	n/a	n/a	2023
+SMG-06	TGTAATTGTCGC	AGCCGGCACATA	Meron	Sediment	40	Sesoko	Okinawa	Central Ryukyus	n/a	n/a	2023
+SMG-07-2	ACTCACGGTATG	CCAAGTCTTACA	Meron	Sediment	40	Sesoko	Okinawa	Central Ryukyus	n/a	n/a	2023
+SMG-08	CTTACACCAAGT	CGCAAATTCGAC	Meron	Sediment	40	Sesoko	Okinawa	Central Ryukyus	n/a	n/a	2023
+SMG-08-2	GTCTACACACAT	CCAAGTCTTACA	Meron	Sediment	40	Sesoko	Okinawa	Central Ryukyus	n/a	n/a	2023
+SW20-2	GACTCTTGGCAA	AGCCGGCACATA	Meron	Coral Reef Surrounding Water	20	Sesoko	Okinawa	Central Ryukyus	n/a	n/a	2023
+SW20-3-2	ATACTTCGCAGG	CCAAGTCTTACA	Meron	Coral Reef Surrounding Water	20	Sesoko	Okinawa	Central Ryukyus	n/a	n/a	2023
+SW40-4	ACCACATACATC	CCAAGTCTTACA	Meron	Coral Reef Surrounding Water	40	Sesoko	Okinawa	Central Ryukyus	n/a	n/a	2023
+SW40-4-2	TGCAATGTTGCT	AGCCGGCACATA	Meron	Coral Reef Surrounding Water	40	Sesoko	Okinawa	Central Ryukyus	n/a	n/a	2023
+Yakushima-S3-2	GTACCTAATTGC	CCAAGTCTTACA	NatGeo	Open Water	1	Yakushima	Yakushima	North Ryukyus	n/a	n/a	2023
+Amami-D1	TCTTCCGCTACT	ACACTAGATCCG	NatGeo	Open Water	40	Amami	Yakushima	North Ryukyus	n/a	n/a	2023
+Amami-D2	GAATGATGAGTG	GCTCGAAGATCG	NatGeo	Open Water	40	Amami	Yakushima	North Ryukyus	n/a	n/a	2023
+Amami-S4	CGTCCGAAATAC	CGCAAATTCGAC	NatGeo	Open Water	1	Amami	Yakushima	North Ryukyus	n/a	n/a	2023
+Miyako-S1	GCAGGATAGATA	CGCAAATTCGAC	NatGeo	Open Water	1	Miyako	Miyako	Yaeyama	n/a	n/a	2023
+Miyako-S4-2	TGCAATGTTGCT	CCAAGTCTTACA	NatGeo	Open Water	1	Miyako	Miyako	Yaeyama	n/a	n/a	2023
+Miyako-D1-2	TCTACGGAGAGC	CCAAGTCTTACA	NatGeo	Open Water	40	Miyako	Miyako	Yaeyama	n/a	n/a	2023
+Hiro-02	GCAGGATAGATA	CCAAGTCTTACA	NatGeo	Open Water	10	Hiroshima	Honshu	Seto Inland Sea			2023
+Hiro-1	AACACAAGGAGT	CCAAGTCTTACA	NatGeo	Open Water	10	Hiroshima	Honshu	Seto Inland Sea			2023
+

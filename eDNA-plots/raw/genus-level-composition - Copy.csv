@@ -1,0 +1,45 @@
+index,Unassigned;__;__;__;__;__,Biecheleria,Cladocopium,Woloszynskia,Fugacium,Clade I,Gerakladium,Gymnodinium,Durusdinium,Symbiodinium,Halluxium,Ansanella,Chytriodinium,Heterocapsa,Biecheleriopsis,Gyrodinium,Cochlodinium,Dinophysis,Karlodinium,Karenia,index1,index2,Sample_Project,Type,Depth,Location,Island,Region,Genus,Species,Year
+Amami-D1,0,0,0,271,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,TCTTCCGCTACT,ACACTAGATCCG,NatGeo,Open Water,40,Amami,Yakushima,North Ryukyus,n/a,n/a,2023
+Amami-D2,0,369,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,GAATGATGAGTG,GCTCGAAGATCG,NatGeo,Open Water,40,Amami,Yakushima,North Ryukyus,n/a,n/a,2023
+Amami-D3,67,0,9,3670,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,TCTGTTGCTCTC,AGCCGGCACATA,NatGeo,Open Water,40,Amami,Amami,North Ryukyus,n/a,n/a,2023
+Amami-D4,247,0,39,0,0,0,0,13,0,0,0,0,0,0,0,0,0,0,0,0,AGTTCCCGAGTA,AGCCGGCACATA,Meron,Open Water,40,Amami,Amami,North Ryukyus,n/a,n/a,2023
+Amami-S1,3854,658,0,0,0,0,0,16,0,0,0,0,0,0,0,0,0,0,0,0,AGCCTAAGCACG,AGCCGGCACATA,NatGeo,Open Water,1,Amami,Amami,North Ryukyus,n/a,n/a,2023
+Amami-S1a,4125,17,0,0,0,0,0,308,0,0,0,0,0,0,0,0,0,0,0,0,GACTCTTGGCAA,GCTCGAAGATCG,NatGeo,Open Water,1,Amami,Amami,North Ryukyus,n/a,n/a,2023
+Amami-S2,6195,0,492,0,0,0,0,201,0,0,0,0,0,0,0,0,0,0,0,0,ATACCTTCGGTA,AGCCGGCACATA,NatGeo,Open Water,1,Amami,Amami,North Ryukyus,n/a,n/a,2023
+Amami-S3,2681,1552,190,0,0,0,0,693,12,0,0,0,0,0,0,0,0,0,0,0,ACCACATACATC,CGCAAATTCGAC,NatGeo,Open Water,1,Amami,Amami,North Ryukyus,n/a,n/a,2023
+Amami-S4,725,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,CGTCCGAAATAC,CGCAAATTCGAC,NatGeo,Open Water,1,Amami,Yakushima,North Ryukyus,n/a,n/a,2023
+Hiro-02,1353,0,0,0,0,0,0,0,0,0,0,0,14,0,0,6,3,0,0,0,GCAGGATAGATA,CCAAGTCTTACA,NatGeo,Open Water,10,Hiroshima,Honshu,Seto Inland Sea,,,2023
+Hiro-1,327,0,26,0,0,0,0,0,0,0,0,0,0,0,10,0,0,3,0,2,AACACAAGGAGT,CCAAGTCTTACA,NatGeo,Open Water,10,Hiroshima,Honshu,Seto Inland Sea,,,2023
+Miyako-D1,2631,772,173,0,0,0,0,0,0,0,0,0,0,13,0,0,0,0,0,0,ATTGGGCTAGGC,CGCAAATTCGAC,NatGeo,Open Water,40,Miyako,Miyako,Yaeyama,n/a,n/a,2023
+Miyako-D1-2,1133,342,0,0,0,0,0,30,0,0,0,0,0,0,0,0,0,0,0,0,TCTACGGAGAGC,CCAAGTCTTACA,NatGeo,Open Water,40,Miyako,Miyako,Yaeyama,n/a,n/a,2023
+Miyako-D1a,3407,1324,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,ACTCACGGTATG,AGCCGGCACATA,NatGeo,Open Water,40,Miyako,Miyako,Yaeyama,n/a,n/a,2023
+Miyako-S1,541,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,GCAGGATAGATA,CGCAAATTCGAC,NatGeo,Open Water,1,Miyako,Miyako,Yaeyama,n/a,n/a,2023
+Miyako-S2,4212,0,0,0,0,0,0,62,0,0,0,0,0,14,0,0,0,0,0,0,AATGTCCGTGAC,CGCAAATTCGAC,NatGeo,Open Water,1,Miyako,Miyako,Yaeyama,n/a,n/a,2023
+Miyako-S3,3809,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,AACACAAGGAGT,GCTCGAAGATCG,NatGeo,Open Water,1,Miyako,Miyako,Yaeyama,n/a,n/a,2023
+Miyako-S4,3493,0,0,0,0,0,0,569,0,0,0,0,0,0,0,0,0,0,0,0,TACTTCGCTCGC,CCAAGTCTTACA,NatGeo,Open Water,1,Miyako,Miyako,Yaeyama,n/a,n/a,2023
+Miyako-S4-2,158,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,TGCAATGTTGCT,CCAAGTCTTACA,NatGeo,Open Water,1,Miyako,Miyako,Yaeyama,n/a,n/a,2023
+SMG-01,221,0,1218,0,221,0,0,0,0,42,0,0,0,0,0,0,0,0,0,0,TGTTATCGCACA,GCTCGAAGATCG,Meron,Sediment,20,Sesoko,Okinawa,Central Ryukyus,n/a,n/a,2023
+SMG-02,215,0,1260,0,617,248,0,0,0,44,0,0,0,0,0,0,0,0,0,0,TCGTCGATAATC,GCTCGAAGATCG,Meron,Sediment,20,Sesoko,Okinawa,Central Ryukyus,n/a,n/a,2023
+SMG-02-2,3,0,5,0,794,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,GTCTACACACAT,AGCCGGCACATA,Meron,Sediment,20,Sesoko,Okinawa,Central Ryukyus,n/a,n/a,2023
+SMG-03,0,0,0,0,0,0,49,0,0,0,0,0,0,0,0,0,0,0,0,0,TACTTCGCTCGC,GCTCGAAGATCG,Meron,Sediment,20,Sesoko,Okinawa,Central Ryukyus,n/a,n/a,2023
+SMG-04,56,0,2098,0,87,0,0,0,62,22,0,0,0,0,0,0,0,0,0,0,AACACAAGGAGT,CGCAAATTCGAC,Meron,Sediment,20,Sesoko,Okinawa,Central Ryukyus,n/a,n/a,2023
+SMG-05-2,33,0,28,0,25,0,35,0,12,0,6,6,0,0,0,0,0,0,0,0,ATACTTCGCAGG,AGCCGGCACATA,Meron,Sediment,40,Sesoko,Okinawa,Central Ryukyus,n/a,n/a,2023
+SMG-06,170,0,397,0,0,0,93,0,21,3,105,0,0,0,0,0,0,0,0,0,TGTAATTGTCGC,AGCCGGCACATA,Meron,Sediment,40,Sesoko,Okinawa,Central Ryukyus,n/a,n/a,2023
+SMG-07-2,74,0,155,0,3,0,304,0,9,0,0,0,0,0,0,0,0,0,0,0,ACTCACGGTATG,CCAAGTCTTACA,Meron,Sediment,40,Sesoko,Okinawa,Central Ryukyus,n/a,n/a,2023
+SMG-08,48,0,181,0,8,4,43,0,8,0,3,0,0,0,0,0,0,0,0,0,CTTACACCAAGT,CGCAAATTCGAC,Meron,Sediment,40,Sesoko,Okinawa,Central Ryukyus,n/a,n/a,2023
+SMG-08-2,154,0,541,0,39,0,62,0,0,0,4,0,0,0,0,0,0,0,0,0,GTCTACACACAT,CCAAGTCTTACA,Meron,Sediment,40,Sesoko,Okinawa,Central Ryukyus,n/a,n/a,2023
+SMG-20m,815,0,1370,0,688,800,0,0,0,144,0,0,0,0,0,0,0,0,0,0,TCGTCGATAATC,GCTCGAAGATCG,Meron,Sediment,20,Sesoko,Okinawa,Central Ryukyus,n/a,n/a,2023
+SMG-20ma,1381,0,1941,0,403,0,0,0,0,225,0,0,0,0,0,0,0,0,0,0,TGTTATCGCACA,GCTCGAAGATCG,Meron,Sediment,20,Sesoko,Okinawa,Central Ryukyus,n/a,n/a,2023
+SMG-40m,489,0,210,0,32,50,988,0,211,5,107,14,0,0,0,0,0,0,0,0,TATCAGGTGTGC,AGCCGGCACATA,Meron,Sediment,40,Sesoko,Okinawa,Central Ryukyus,n/a,n/a,2023
+SW20-2,0,0,1004,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,GACTCTTGGCAA,AGCCGGCACATA,Meron,Coral Reef Surrounding Water,20,Sesoko,Okinawa,Central Ryukyus,n/a,n/a,2023
+SW20-3,206,1859,0,0,0,0,1020,0,1568,0,0,0,0,0,0,0,0,0,0,0,TCTTCCGCTACT,AGCCGGCACATA,Meron,Coral Reef Surrounding Water,20,Sesoko,Okinawa,Central Ryukyus,n/a,n/a,2023
+SW20-3-2,37,288,330,0,0,0,12,3,152,0,0,0,0,0,0,0,0,0,0,0,ATACTTCGCAGG,CCAAGTCTTACA,Meron,Coral Reef Surrounding Water,20,Sesoko,Okinawa,Central Ryukyus,n/a,n/a,2023
+SW40-4,161,94,3811,0,0,0,0,0,63,0,0,0,0,0,0,0,0,0,0,0,ACCACATACATC,CCAAGTCTTACA,Meron,Coral Reef Surrounding Water,40,Sesoko,Okinawa,Central Ryukyus,n/a,n/a,2023
+SW40-4-2,47,8,909,0,0,0,5,0,8,0,0,0,0,0,0,0,0,0,0,0,TGCAATGTTGCT,AGCCGGCACATA,Meron,Coral Reef Surrounding Water,40,Sesoko,Okinawa,Central Ryukyus,n/a,n/a,2023
+Yakushima-D1,3308,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,GCTTCGGTAGAT,ACACTAGATCCG,NatGeo,Open Water,40,Yakushima,Yakushima,North Ryukyus,n/a,n/a,2023
+Yakushima-S1,5874,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,CTTACACCAAGT,ACACTAGATCCG,NatGeo,Open Water,1,Yakushima,Yakushima,North Ryukyus,n/a,n/a,2023
+Yakushima-S2,2448,811,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,TATCAGGTGTGC,GCTCGAAGATCG,NatGeo,Open Water,1,Yakushima,Yakushima,North Ryukyus,n/a,n/a,2023
+Yakushima-S3,4102,0,2,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,TGTAATTGTCGC,GCTCGAAGATCG,NatGeo,Open Water,1,Yakushima,Yakushima,North Ryukyus,n/a,n/a,2023
+Yakushima-S3-2,431,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,GTACCTAATTGC,CCAAGTCTTACA,NatGeo,Open Water,1,Yakushima,Yakushima,North Ryukyus,n/a,n/a,2023
+Yakushima-S3a,4012,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,CGTCCGAAATAC,ACACTAGATCCG,NatGeo,Open Water,1,Yakushima,Yakushima,North Ryukyus,n/a,n/a,2023
+Yakushima-S4,3590,0,0,0,0,0,0,143,0,0,0,0,0,0,0,0,0,0,0,0,AATGGAGCATGA,GCTCGAAGATCG,NatGeo,Open Water,1,Yakushima,Yakushima,North Ryukyus,n/a,n/a,2023
