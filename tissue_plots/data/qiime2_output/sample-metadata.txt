@@ -1,0 +1,117 @@
+sample-id	index1	index2	Sample_Project	Type	Depth	Location	Reproduction	Island	Region	Genus	Species	Year
+#q2:types	categorical	categorical	categorical	categorical	numeric	categorical	categorical	categorical	categorical	categorical	categorical	numeric
+P2	GTCTACACACAT	AGCCGGCACATA	Saki	Planula	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+P6	ATACTTCGCAGG	AGCCGGCACATA	Saki	Planula	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+P32-3	TCTACGGAGAGC	AGCCGGCACATA	Saki	Planula	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+P37	CCTAGTACTGAT	CGCAAATTCGAC	Saki	Planula	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+C3	TAACGCTTGGGT	ACACTAGATCCG	Saki	Adult	5	Akajima	Broadcast	Kerama	Central Ryukyus	Acropora	Acropora tenuis	2008
+P75	TGCAATGTTGCT	GCTCGAAGATCG	Saki	Planula	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+P9	CCTAGTACTGAT	GCTCGAAGATCG	Saki	Planula	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+P33-2	TAACGCTTGGGT	GCTCGAAGATCG	Saki	Planula	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+P12	ATCGCTCGAGGA	GCTCGAAGATCG	Saki	Planula	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+P13-5	ACTCACGGTATG	ACACTAGATCCG	Saki	Planula	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+P33-4	ACGGCATGGCAT	CCAAGTCTTACA	Saki	Planula	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+P35-2	ACGGCATGGCAT	GCTCGAAGATCG	Saki	Planula	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+P33-1	ATGGTTGTTGGC	AGCCGGCACATA	Saki	Planula	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+P38	CCTAGTACTGAT	AGCCGGCACATA	Saki	Planula	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+P41	AATCTTGCTGCA	AGCCGGCACATA	Saki	Planula	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+P45	AATCTTGCTGCA	GCTCGAAGATCG	Saki	Planula	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+P87	AATCTTGCTGCA	CCAAGTCTTACA	Saki	Planula	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+C6	AATCTTGCTGCA	ACACTAGATCCG	Saki	Adult	5	Akajima	Broadcast	Kerama	Central Ryukyus	Acropora	Acropora tenuis	2008
+C12	TGCAATGTTGCT	ACACTAGATCCG	Saki	Adult	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+P75-2	TGCAATGTTGCT	GCTCGAAGATCG	Saki	Planula	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+P88	CGTGACAATGTC	GCTCGAAGATCG	Saki	Planula	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2008
+MS2229	ATTGGGCTAGGC	AGCCGGCACATA	Meron	Adult	35	Yabu	Broadcast	Okinawa	Central Ryukyus	Montipora	Montipora sp.	2022
+MS2234	TGTTATCGCACA	CCAAGTCTTACA	Meron	Adult	40	Nakanose	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora cf. tenella	2022
+MS2235	TCGTCGATAATC	CCAAGTCTTACA	Meron	Adult	38	Nakanose	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora sp.	2022
+MS2242	GCAGGATAGATA	AGCCGGCACATA	Meron	Adult	38.5	Awa	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora sp.	2022
+MS2262	TGTTATCGCACA	ACACTAGATCCG	Meron	Adult	39.5	Shigeo Reef	Broadcast	Okinawa	Central Ryukyus	Pachyseris	Pachyseris speciosa	2022
+MS2265	ATTGGGCTAGGC	ACACTAGATCCG	Meron	Adult	39.3	Shigeo Reef	Broadcast	Okinawa	Central Ryukyus	Pachyseris	Pachyseris speciosa	2022
+MS2362	GCAGGATAGATA	CCAAGTCTTACA	Meron	Adult	57.4	DSR2	Broadcast	Okinawa	Central Ryukyus	Montipora	Montipora sp.	2022
+MS2434	GACTCTTGGCAA	AGCCGGCACATA	Meron	Adult	80.2	Minnajima	Broadcast	Okinawa	Central Ryukyus	Leptoseris	Leptoseris sp.	2022
+MS2463	AATGTCCGTGAC	ACACTAGATCCG	Meron	Adult	79.1	MinnaSone	Broadcast	Okinawa	Central Ryukyus	Leptoseris	Leptoseris sp.	2022
+SS40	TGACCTCCAAGA	CCAAGTCTTACA	Meron	Adult	20	Sesoko	Broadcast	Okinawa	Central Ryukyus	Cyphastrea	Cyphastrea sp.	2023
+SS41	ACAAGGAGGTGA	CCAAGTCTTACA	Meron	Adult	9.5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Leptoseris	Leptoseris yabei	2023
+SS44	AATGGAGCATGA	CCAAGTCTTACA	Meron	Adult	8.5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2023
+SS45	TGACCTCCAAGA	ACACTAGATCCG	Meron	Adult	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Cyphastrea	Cyphastrea sp.	2023
+SS55	TGACCTCCAAGA	CGCAAATTCGAC	Meron	Adult	3	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2023
+SS61	CGTCCGAAATAC	GCTCGAAGATCG	Meron	Adult	3	Nakanose	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora robusta	2023
+SS63	GACTCTTGGCAA	GCTCGAAGATCG	Meron	Adult	6	Nakanose	Broadcast	Okinawa	Central Ryukyus	Pocillopora	Pocillopora sp.	2023
+SS64	ATACCTTCGGTA	AGCCGGCACATA	Meron	Adult	9	Nakanose	Broadcast	Okinawa	Central Ryukyus	Pocillopora	Pocillopora sp.	2023
+SS65	AGCTTGACAGCT	CCAAGTCTTACA	Meron	Adult	7	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2023
+SS72	AGTTCCCGAGTA	ACACTAGATCCG	Meron	Adult	8	Sesoko	Broadcast	Okinawa	Central Ryukyus	Echinopora	Echinopora lamellosa	2023
+SS73	AGCCTAAGCACG	ACACTAGATCCG	Meron	Adult	1	Sesoko	Broadcast	Okinawa	Central Ryukyus	Montipora	Montipora digitata	2023
+SS74	ATACCTTCGGTA	ACACTAGATCCG	Meron	Adult	1	Sesoko	Broadcast	Okinawa	Central Ryukyus	Montipora	Montipora digitata	2023
+SS77	AGTTCCCGAGTA	GCTCGAAGATCG	Meron	Adult	1	Sesoko	Broadcast	Okinawa	Central Ryukyus	Montipora	Montipora digitata	2023
+KK1	TAACACCACATC	AGCCGGCACATA		Adult	3	KenKen	Broadcast	Okinawa	Central Ryukyus	Pocillopora	Pocillopora damicornis	2015
+KK2	GACACATTTCTG	AGCCGGCACATA		Adult	3	KenKen	Brooding	Okinawa	Central Ryukyus	cf. Madracis	cf. Madracis sp.	2015
+KK3	CTCTACCTCTAC	AGCCGGCACATA		Adult	3	KenKen	Broadcast	Okinawa	Central Ryukyus	Pocillopora	Pocillopora damicornis	2015
+MS1995	TAACACCACATC	ACACTAGATCCG		Adult	55	DSR	Broadcast	Okinawa	Central Ryukyus	Echinophyllia	Echinophyllia sp	2018
+MS1996	GACACATTTCTG	ACACTAGATCCG		Adult	55	DSR	Broadcast	Okinawa	Central Ryukyus	Montipora	Montipora sp.	2018
+MS2007	CTCTACCTCTAC	CGCAAATTCGAC		Adult	72	MinnaSone	Broadcast	Okinawa	Central Ryukyus	Hydnophora	Hydnophora sp.	2018
+MS2200	TCGGAGTGTTGT	CGCAAATTCGAC		Adult	75	Awa	Broadcast	Okinawa	Central Ryukyus	Leptoseris	Leptoseris sp.	2022
+MS2201	TCAACAGCATCG	CGCAAATTCGAC		Adult	75	Awa	Broadcast	Okinawa	Central Ryukyus	Leptoseris	Leptoseris sp.	2022
+MS2419	TGGCAAGACTCT	GGTCACTGACAG		Adult	100	OnnaSone	Broadcast	Okinawa	Central Ryukyus	Leptoseris	Leptoseris sp.	2022
+MS2421	TCAACAGCATCG	GGTCACTGACAG		Adult	100	OnnaSone	Broadcast	Okinawa	Central Ryukyus	Leptoseris	Leptoseris sp.	2022
+MS2422	TTATGCAGTCGT	GGTCACTGACAG		Adult	100	NiiSone	Broadcast	Okinawa	Central Ryukyus	Leptoseris	Leptoseris sp.	2022
+MS2423	ATTAGTTCGCGT	GGTCACTGACAG		Adult	100	NiiSone	Broadcast	Okinawa	Central Ryukyus	Leptoseris	Leptoseris sp.	2022
+MS2389	TTATGCAGTCGT	CGCAAATTCGAC		Adult	79.7	MinnaSone	Broadcast	Okinawa	Central Ryukyus	Echinophyllia	Echinophyllia sp	2022
+MS1787	CCATAGGGTTCA	CCAAGTCTTACA		Adult	25	Nagura	Broadcast	Ishigaki	Yaeyama	Leptoseris	Leptoseris papyracea	2017
+MS1796	GCATGGCTCTAA	GCTCGAAGATCG		Adult	23.5	Nagura	n/a	Ishigaki	Yaeyama	Bernardpora	Bernardpora stuchburyi	2017
+MS1798	GTATTACGATCC	CGCAAATTCGAC		Adult	23.5	Nagura	n/a	Ishigaki	Yaeyama	Podabacia	Podabacia sp.	2017
+MS1799	TTGATGCTATGC	CGCAAATTCGAC		Adult	23	Nagura	Broadcast	Ishigaki	Yaeyama	Pavona	Pavona varians	2017
+CT2	ATTAGTTCGCGT	ACACTAGATCCG		Adult	15	Sesoko	Broadcast	Okinawa	Central Ryukyus	Ctenactis	Ctenactis ap.	2010
+Ate2	TGGCAAGACTCT	CGCAAATTCGAC		Adult	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenuis	2010
+MS1	ACCACATACATC	TAATCCACAGCG		Adult	40.9	Shigeo Reef	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenella	2012
+MS2	AACACAAGGAGT	TAATCCACAGCG		Adult	41.1	Shigeo Reef	Broadcast	Okinawa	Central Ryukyus	Galaxea	Galaxea cf. astreata	2012
+MS3	AATGTCCGTGAC	TAATCCACAGCG		Adult	41	Shigeo Reef	Broadcast	Okinawa	Central Ryukyus	Pachyseris	Pachyseris speciosa	2012
+MS4	TACTTCGCTCGC	TAATCCACAGCG		Adult	40.7	Shigeo Reef	Broadcast	Okinawa	Central Ryukyus	Porites	Porites sp.	2012
+MS5	GCTTCGGTAGAT	TAATCCACAGCG		Adult	45	Shigeo Reef	Brooding	Okinawa	Central Ryukyus	Seriatopora	Seriatopora hystrix	2012
+MS6	CTTACACCAAGT	TAATCCACAGCG		Adult	45	Shigeo Reef	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora tenella	2012
+MS7	TGACCTCCAAGA	TAATCCACAGCG		Adult	45	Bise	Broadcast	Okinawa	Central Ryukyus	Alveopora	Alveopora sp.	2010
+MS12	ACAAGGAGGTGA	TAATCCACAGCG		Adult	48	Bise	Broadcast	Okinawa	Central Ryukyus	Cycloseris	Cycloseris sp.	2011
+MS13	TATCAGGTGTGC	TAATCCACAGCG		Adult	39.3	Shigeo Reef	Brooding	Okinawa	Central Ryukyus	Seriatopora	Seriatopora hystrix	2012
+MS30	TGTAATTGTCGC	TAATCCACAGCG		Adult	39.6	Shigeo Reef	Brooding	Okinawa	Central Ryukyus	Seriatopora	Seriatopora hystrix	2012
+MS532	TCTGTTGCTCTC	GACTCGAATCGT		Adult	39.6	Shigeo Reef	Broadcast	Okinawa	Central Ryukyus	Acropora	Acropora sp.	2012
+MS533	AGCTTGACAGCT	GACTCGAATCGT		Adult	39.6	Shigeo Reef	Broadcast	Okinawa	Central Ryukyus	Porites	Porites sp.	2012
+MS534	AATGGAGCATGA	GACTCGAATCGT		Adult	39.6	Shigeo Reef	Broadcast	Okinawa	Central Ryukyus	Galaxea	Galaxea sp.	2012
+MS536	AGCCTAAGCACG	GACTCGAATCGT		Adult	39	Shigeo Reef	Broadcast	Okinawa	Central Ryukyus	Galaxea	Galaxea cf. astreata	2012
+MS986	ATACCTTCGGTA	GACTCGAATCGT		Adult	6	Nagura	Broadcast	Ishigaki	Yaeyama	Acropora	Acropora sp.	2014
+MS969	CGTCCGAAATAC	GACTCGAATCGT		Adult	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Galaxea	Galaxea fascicularis	2014
+I2	GAATGATGAGTG	ATGGACCGAACC		Adult	2	Shiraho	Brooding	Ishigaki	Yaeyama	Heliopora	Heliopora coreulea	2009
+I3	CGTCCGAAATAC	ATGGACCGAACC		Adult	2	Shiraho	Brooding	Ishigaki	Yaeyama	Heliopora	Heliopora coreulea	2009
+I4	GCAGGATAGATA	ATGGACCGAACC		Adult	2	Shiraho	Brooding	Ishigaki	Yaeyama	Heliopora	Heliopora coreulea	2009
+I15	ACCACATACATC	GGTCACTGACAG		Adult	2	Shiraho	Broadcast	Ishigaki	Yaeyama	Porites	Porites cylindrica	2009
+I17	AATGTCCGTGAC	GGTCACTGACAG		Adult	2	Shiraho	Broadcast	Ishigaki	Yaeyama	Porites	Porites cylindrica	2009
+I18	TACTTCGCTCGC	GGTCACTGACAG		Adult	2	Shiraho	Broadcast	Ishigaki	Yaeyama	Porites	Porites cylindrica	2009
+I19	GCTTCGGTAGAT	GGTCACTGACAG		Adult	2	Shiraho	Broadcast	Ishigaki	Yaeyama	Porites	Porites cylindrica	2009
+I20	CTTACACCAAGT	GGTCACTGACAG		Adult	2	Shiraho	Broadcast	Ishigaki	Yaeyama	Porites	Porites cylindrica	2009
+I25	TATCAGGTGTGC	GGTCACTGACAG		Adult	2	Shiraho	Broadcast	Ishigaki	Yaeyama	Porites	Porites australiensis	2009
+I26	TGTAATTGTCGC	GGTCACTGACAG		Adult	2	Shiraho	Broadcast	Ishigaki	Yaeyama	Porites	Porites australiensis	2009
+MS2416	TCGGAGTGTTGT	TAATCCACAGCG		Adult	120	OnnaSone	Brooding	Okinawa	Central Ryukyus	Dendrophyllid	Dendrophyllid sp.	2022
+MS2516	ATTAGTTCGCGT	TAATCCACAGCG		Adult	96.4	MinnaSone	Broadcast	Okinawa	Central Ryukyus	Leptoseris	Leptoseris sp.	2022
+MS2429	TCGGAGTGTTGT	GACTCGAATCGT		Adult	79	Minnajima	Broadcast	Okinawa	Central Ryukyus	Alveopora	Alveopora sp.	2022
+MS2443	TCAACAGCATCG	GACTCGAATCGT		Adult	73	Minnajima	Broadcast	Okinawa	Central Ryukyus	Echinophyllia	Echinophyllia sp	2022
+MS2204	TAGCGGATCACG	ATGGACCGAACC		Adult	75	Awa	Broadcast	Okinawa	Central Ryukyus	Leptoseris	Leptoseris sp.	2022
+MS2370	CACATCTAACAC	ATGGACCGAACC		Adult	80.3	Minnajima	Broadcast	Okinawa	Central Ryukyus	Leptoseris	Leptoseris sp.	2022
+MS2372	TTGATGCTATGC	ATGGACCGAACC		Adult	83.9	Minnajima	Broadcast	Okinawa	Central Ryukyus	Leptoseris	Leptoseris sp.	2022
+SG9	GACACATTTCTG	GACTCGAATCGT		Adult	3	Sesoko	Broadcast	Okinawa	Central Ryukyus	Galaxea	Galaxea fascicularis	2023
+SG14	CGCCAAATAACC	GACTCGAATCGT		Adult	3	Sesoko	Broadcast	Okinawa	Central Ryukyus	Galaxea	Galaxea fascicularis	2023
+SG18	TTGATGCTATGC	GACTCGAATCGT		Adult	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Galaxea	Galaxea fascicularis	2023
+SG21	CACATCTAACAC	GACTCGAATCGT		Adult	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Galaxea	Galaxea fascicularis	2023
+SG20	GCATGGCTCTAA	GACTCGAATCGT		Adult	5	Sesoko	Broadcast	Okinawa	Central Ryukyus	Galaxea	Galaxea fascicularis	2023
+SG28	CCATAGGGTTCA	GACTCGAATCGT		Adult	2	Motobu	Broadcast	Okinawa	Central Ryukyus	Galaxea	Galaxea fascicularis	2023
+Mot5	TAACACCACATC	GGTCACTGACAG		Adult	5	Motobu	Broadcast	Okinawa	Central Ryukyus	Pocillopora	Pocillopora damicornis	2015
+Mot6	GACACATTTCTG	GGTCACTGACAG		Adult	5	Motobu	Broadcast	Okinawa	Central Ryukyus	Pocillopora	Pocillopora damicornis	2015
+Odo1	TAACACCACATC	TAATCCACAGCG		Adult	5	Odo	Broadcast	Okinawa	Central Ryukyus	Pocillopora	Pocillopora damicornis	2015
+Odo2	GACACATTTCTG	TAATCCACAGCG		Adult	5	Odo	Broadcast	Okinawa	Central Ryukyus	Pocillopora	Pocillopora damicornis	2015
+Odo3d	CTCTACCTCTAC	TAATCCACAGCG		Adult	5	Odo	Broadcast	Okinawa	Central Ryukyus	Pocillopora	Pocillopora damicornis	2015
+Odo32	TAGCGGATCACG	TAATCCACAGCG		Adult	5	Odo	Broadcast	Okinawa	Central Ryukyus	Pocillopora	Pocillopora damicornis	2015
+Odo5	GTATTACGATCC	TAATCCACAGCG		Adult	5	Odo	Broadcast	Okinawa	Central Ryukyus	Pocillopora	Pocillopora damicornis	2015
+Mot1	TTGATGCTATGC	TAATCCACAGCG		Adult	5	Motobu	Broadcast	Okinawa	Central Ryukyus	Pocillopora	Pocillopora damicornis	2015
+Mot3	CACATCTAACAC	TAATCCACAGCG		Adult	5	Motobu	Broadcast	Okinawa	Central Ryukyus	Pocillopora	Pocillopora damicornis	2015
+MS2424	TGGCAAGACTCT	ATGGACCGAACC		Adult	100	NiiSone	Broadcast	Okinawa	Central Ryukyus	Leptoseris	Leptoseris sp.	2015
+Ihe2	AGCTTGACAGCT	ATGGACCGAACC		Adult	5	Iheya	Broadcast	Okinawa	Central Ryukyus	Pocillopora	Pocillopora damicornis	2022
+Ihe3	TCTGTTGCTCTC	ATGGACCGAACC		Adult	5	Iheya	Broadcast	Okinawa	Central Ryukyus	Pocillopora	Pocillopora damicornis	
+Ihe4	AGTTCCCGAGTA	ATGGACCGAACC		Adult	5	Iheya	Broadcast	Okinawa	Central Ryukyus	Pocillopora	Pocillopora damicornis	
+MS2386	TTATGCAGTCGT	GACTCGAATCGT		Adult	78.2	MinnaSone	Brooding	Okinawa	Central Ryukyus	Madracis	Madracis kyrbyi	2022

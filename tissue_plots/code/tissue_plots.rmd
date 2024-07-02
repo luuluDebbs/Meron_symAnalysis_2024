@@ -1,0 +1,746 @@
+---
+title: "Coral-Tissue-Analysis"
+author: "Meron G. Tekle"
+date: "2024-06-04"
+output: html_document
+---
+
+# Analysis codes for Coral Tissue samples
+
+## set the working directory for the analysis
+
+```{r}
+setwd("~/OneDrive/Desktop/minimalR/tissue_plots/")
+```
+
+## Load required packages for the analysis
+
+```{r}
+library(tidyverse)
+library(qiime2R)
+library(microbiome)
+library(phyloseq)
+library(stringr)
+library(vegan)
+```
+
+## Import .qza files from qiime2 into R using the qiime2R package and create a phyloseq object
+
+```{r}
+physeq <- qza_to_phyloseq(
+  features = "table.qza",
+  tree = "rooted_tree.qza",
+  "blast-taxonomy-results-99.qza",
+  metadata = "sample-metadata.txt")
+
+```
+
+### use the microbiome package to create tible files for feature table and taxonomy table which will be merged later to make analysis easier down the road
+
+```{r}
+otu.tib <- otu_tibble(physeq, column.id = "FeatureID")  #retrieves our feature table
+tax.tib <- tax_tibble(physeq, column.id = "FeatureID") #retrieves our taxonomic assignment table
+sample_tib <- sample_tibble(physeq, column.id = "SampleID") #retrieves or sample metadata
+```
+
+### Then we will merge all these tables using shared columns such as "SampleID" and "featureID"
+
+```{r}
+dat <- otu.tib %>% 
+  pivot_longer(-FeatureID, names_to = "SampleID", values_to = "count") #creates a file with the columns FeatureID(ASV id given by qiime), SampleID (Sample names) and Count(abundance of a feature per sample). Now it is easier to join with other tables
+```
+
+### Use left_join to add taxa table, metadata
+
+```{r}
+dat <- dat %>% 
+  left_join(tax.tib, by="FeatureID")
+
+dat <- dat %>% 
+  left_join(sample_tib, by = "SampleID")
+
+dat
+```
+
+### Now to we add shannon index and PCoA results to the data table, but first we import both shannon and PCoA results
+
+```{r}
+shannon <- read_qza("shannon_vector.qza") #import from qiime using qiime2R
+
+shannon <- shannon$data %>% rownames_to_column("SampleID") #make it easier to merge to "dat" using "SampleID"
+
+dat <- dat %>% 
+  left_join(shannon, by = "SampleID") 
+
+dat
+```
+
+### We also add a column for observed features
+
+```{r}
+obs_feat <- read_qza("observed_features_vector.qza") #import from qiime using qiime2R
+```
+
+```{r}
+obs_feat <- obs_feat$data %>% rownames_to_column("SampleID") #make it easier to merge to "dat" using "SampleID"
+
+dat <- dat %>% 
+  left_join(obs_feat, by = "SampleID") 
+
+```
+
+### Now we do the same with PCoA results
+
+```{r}
+uwunifrac<-read_qza("unweighted_unifrac_pcoa_results.qza") #import unweighted unifrac results from qiime2
+
+unifrac_modify<- uwunifrac$data$Vectors %>% 
+  select(SampleID, PC1, PC2)  #we select only two dimensions because we cannot effectively show more dimension on paper
+
+dat <- dat %>% 
+  left_join(unifrac_modify, by = "SampleID")
+
+dat
+```
+
+### Finally we will divide the depth value into four catagories and order them accordinglly
+
+```{r}
+#create a depth category
+dat <- dat %>% 
+  mutate(depth2= case_when(Depth <= 3 ~ "Shallow (1-3m)", 
+                           Depth >= 4 & Depth <= 10 ~ "Deeper Shallow (4-10m)", 
+                           Depth >= 11 & Depth <= 29 ~ "Intermediate (11-29m)", 
+                           Depth >= 30 & Depth <= 50 ~ "Upper Mesophotic (30-50m)",
+                           Depth >= 51 & Depth <= 70 ~ "Middle Mesophotic (51-70m)",
+                           Depth >70 ~ "Lower Mesophotic (>70)"))
+
+#order the catagories based on depth
+dat$depth2 <- factor(dat$depth2, 
+                              levels = c("Shallow (1-3m)", 
+                                         "Deeper Shallow (4-10m)",
+                                         "Intermediate (11-29m)", "Upper Mesophotic (30-50m)", 
+                                         "Middle Mesophotic (51-70m)", 
+                                         "Lower Mesophotic (>70)")) 
+```
+
+### Now we begin analysis, but before we create plots, lets create a custom theme. This will make our code cleaner
+
+```{r}
+my_theme_alpha <-  theme(panel.border = element_rect(colour = "black", fill = NA),
+                     panel.background = element_blank(),
+                     panel.grid = element_blank(),
+                     axis.text  = element_text(size = 10), 
+                     axis.text.x = element_text(angle = 0, face = "italic"),
+                     axis.title = element_text(size = 20),
+                     strip.background = element_blank(),
+                     strip.text = element_text(size = 10),
+                     axis.line.x = element_line(size = 0.5),
+                     axis.line.y = element_line(size = 0.5),
+                     legend.position = "right",
+                     legend.text =element_text(size =6))
+
+```
+
+# Alpha diversity graphs
+
+## Create a Shannon diversity Box Plot
+
+### But before lets create a dataframe with each sample coressponding to a unique sahnnon diversity value
+
+```{r}
+dat_shannon <- dat %>% 
+  group_by(SampleID, Type, Depth, Genus.y, depth2) %>% 
+  summarise(Richness = unique(shannon_entropy))
+
+dat_shannon
+```
+
+## Before ploting lets remove coral genera which have only one observation 
+```{r}
+target_genus <- c("Acropora", "Alveopora", "Galaxea", "Leptoseris", "Montipora",
+                  "Pocillopora")
+dat_shannon <- dat %>%
+  mutate(alpha_genus= Genus.y == target_genus)
+
+
+dat_shannon <- droplevels(dat_shannon[dat_shannon$Genus.y == "Acropora"|dat_shannon$Genus.y == "Alveopora"|
+                                   dat_shannon$Genus.y == "Galaxea"|dat_shannon$Genus.y == "Leptoseris"|
+                                   dat_shannon$Genus.y == "Montipora"|dat_shannon$Genus.y == "Pocillopora",])
+
+dat_shannon <- dat_shannon %>% 
+  group_by(SampleID, Type, Depth, Genus.y, depth2) %>% 
+  summarise(Richness = unique(shannon_entropy))
+
+dat_shannon
+```
+
+### Now lets plot it
+
+
+```{r}
+
+fig7a <-dat_shannon %>% 
+  drop_na() %>% 
+  filter(Type != "Planula",) %>%#removes values from samples not included in analysis because of sampling depth
+  ggplot(aes(Genus.y, Richness)) +
+  geom_boxplot(aes(fill = Genus.y),position = "dodge", show.legend = F)+
+  geom_jitter()+
+  xlab(NULL)+
+  ylab("Shannon Diversity")+
+  scale_fill_manual(values = c("#AA4488","#777711","#117744",
+                               "#114477","#DDAA77","#771122"))+
+  my_theme_alpha
+
+fig7a
+
+#ggsave("figures/shannon-box-plot-tissue-by-genus.png", height = 4, width = 5, device= "png")
+```
+## Plot shannon box for Acropora and Galaxea
+```{r}
+fig7c <-dat_shannon %>% 
+  drop_na() %>% 
+  filter(Type != "Planula", Genus.y == "Acropora"| Genus.y == "Galaxea",) %>%   #removes values from samples not included in analysis because of sampling depth
+  ggplot(aes(Genus.y, Richness)) +
+  geom_boxplot(aes(fill = Genus.y),position = "dodge", show.legend = F)+
+  geom_jitter()+
+  facet_wrap(~depth2, scales = "free_x")+
+  xlab(NULL)+
+  ylab("Shannon Diversity")+
+  scale_fill_manual(values = c("#AA4488","#777711","#117744",
+                               "#114477","#DDAA77","#771122"))+
+  my_theme_alpha
+
+fig7c
+
+#ggsave("figures/shannon-box-plot-Acro-Gala.png", height = 4, width = 5, device= "png")
+```
+
+
+## Create an observed features box plot
+
+### create a custom theme for the plot
+
+```{r}
+my_theme_obs <-  theme(panel.border = element_rect(colour = "black", fill = NA),
+                     panel.background = element_blank(),
+                     panel.grid = element_blank(),
+                     axis.text  = element_text(size = 8), 
+                     axis.text.x = element_text(angle = 90, face = "italic"),
+                     axis.title = element_text(size = 20),
+                     strip.background = element_blank(),
+                     strip.text = element_text(size = 10),
+                     axis.line.x = element_line(size = 0.5),
+                     axis.line.y = element_line(size = 0.5),
+                     legend.position = "right",
+                     legend.text =element_text(size =6))
+```
+
+### Then group, order and plot
+
+```{r}
+dat_obs_feat <- dat %>% 
+  group_by(SampleID, Type, Depth, Genus.y, depth2) %>% 
+  summarise(observed_features = unique(observed_features))
+
+fig7b <- dat_obs_feat %>% 
+  drop_na() %>%
+  ggplot(aes(Genus.y, observed_features)) +
+  geom_point()+
+  xlab(NULL)+
+  ylab("Observed Features")+
+  facet_grid(~depth2, scales = "free_x", space = "free_x", 
+             labeller = label_wrap_gen(width = 10))+
+  my_theme_obs
+
+fig7b 
+#ggsave("figures/observedfeatures-tissue.png", height = 4, width = 5, device= "png")
+```
+## Merge alpha diversity plots
+```{r}
+fig7 <- plot_grid(fig7a,fig7b, nrow = 1, rel_heights = 4, rel_widths = 5)
+
+fig7
+
+#ggsave("figures/fig7.png", height = 5, width = 10, device= "png")
+
+```
+
+
+
+# Beta Diversity Plots
+
+## Create a PCoA ordination based on unweighted unifrac distances
+
+```{r}
+dat_pcoa <- dat %>% 
+  group_by(SampleID, PC1 , PC2, Depth, Genus.y, depth2)
+
+dat_pcoa %>%
+  filter(Genus.y == "Acropora"| Genus.y == "Galaxea", ) %>%
+  drop_na() %>% #drops na values
+  #filter(Genus.y != "Acropora")+
+  ggplot(aes(x=PC1, y=PC2, color= depth2 , shape = Genus.y))+
+  geom_point(alpha=0.5, size = 4) +
+  stat_ellipse(level = 0.68)+
+  xlab(paste("PC1: ", round(100*uwunifrac$data$ProportionExplained[1]), "%")) +
+  ylab(paste("PC2: ", round(100*uwunifrac$data$ProportionExplained[2]), "%"))+
+  scale_color_manual(values= c("#0000FF","#771122","#117744","#777711"), name = "Coral Genera")+
+  my_theme_alpha
+
+  
+  #ggsave("figures/PCoA-tissue.png", height = 4, width = 5, device= "png")
+```
+
+# Species Composition plot
+
+## create a theme for the composition plot
+
+```{r}
+my_theme_bar <-  theme(panel.border = element_rect(colour = "black", fill = NA),
+                     panel.background = element_blank(),
+                     panel.grid = element_blank(),
+                     axis.text  = element_text(size = 6), 
+                     axis.text.x = element_text(angle = 90, face = "italic"),
+                     axis.text.x.top = element_text(size=8),
+                     axis.title = element_text(size = 12),
+                     strip.background = element_blank(),
+                     strip.text = element_text(size = 8),
+                     axis.line.x = element_line(size = 0.5),
+                     axis.line.y = element_line(size = 0.5),
+                     legend.position = "right",
+                     legend.title = element_text(size = 8),
+                     legend.key.size = unit(0.10, "cm"),
+                     legend.text =element_text(size =8, face = "italic"))
+```
+
+## Create a composition plot by genus
+
+### first lets remove the accession number to then merge the same ITS2 Types with diffrent accession numbers(eg. C1-AB12306.1 and C1-AB12306.2)
+
+```{r}
+dat_bar <- dat %>% 
+  mutate(ITS2_types= (str_replace_all(pattern = '-.*', replacement = "", Species.x)))
+
+# mutate(species_name2= (sub("\\..*", "", species_name))) %>% 
+ # mutate(species_name3= (gsub("(\\d)[a-zA-Z]", "\\1", species_name2)))
+
+
+
+```
+
+### Then summurize the top 24 ITS2 sequences
+
+```{r}
+total_top_counts <- dat_bar %>% #summarize and arrange the total count of each genus across all samples
+  group_by(ITS2_types) %>% 
+  summarize(total_top_counts = sum(count)) %>% 
+  arrange(desc(total_top_counts))
+
+top_24_species <- total_top_counts %>% #get the 10 most abundant genus by count
+  top_n(24,wt=total_top_counts) %>% 
+  pull(ITS2_types)
+
+filtered_bar_dat <- dat_bar %>% #filter the data to get the 10 most abundant genera  
+  filter(ITS2_types %in% top_24_species)
+
+filtered_bar_dat<- filtered_bar_dat %>% 
+  group_by(ITS2_types) %>% 
+  mutate(proportion = count / sum(count))
+
+filtered_bar_dat
+```
+
+### Reorder the name of the ITS2 types based on abundance and plot the composition graph
+##Set colros for ITS2types based on their genus
+```{r}
+tt <- filtered_bar_dat %>% select(Genus.x, ITS2_types)
+nt <- tt %>% count(Genus.x) %>% pivot_wider(names_from = Genus.x, values_from = n)
+acols <- colorRampPalette(brewer.pal(9, "Greys"))(nt$Symbiodinium)
+ccols <- colorRampPalette(brewer.pal(9, "Greens"))(nt$Symbiodinium)
+dcols <- brewer.pal(nt$Durusdinium, "Yellows")
+
+
+
+
+```
+
+
+
+```{r}
+
+figure5a <- filtered_bar_dat %>%
+  drop_na() %>% 
+  filter(Type != "Planula") %>% 
+  ggplot(aes(Genus.y, proportion)) +
+  facet_grid(~depth2 , scales = "free_x", space = "free_x", labeller = label_wrap_gen(width = 10))+
+  geom_bar(aes (fill= ITS2_types), stat = "identity", position = "fill", width = 0.9)+
+  scale_fill_discrete(name = NULL)+
+  scale_fill_manual(values= c("#0000FF","#00008F","#771122","#771155","#AA4488",
+                              "#AA4455","#DD7788","#114477","#4477AA","#77AADD",
+                              "#117777","#44AAAA","#117744","#44AA77","#88CCAA",
+                              "#77CCCC","#777711","#AAAA44","#AA7744","#DDAA77",
+                              "#774411","black","red"), name = "ITS2 Types" )+
+  scale_y_continuous(name = "Relative abundance",
+                     labels = scales::percent) +
+  labs(x = NULL)+
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 6))+
+  my_theme_bar
+
+figure5a
+
+#ggsave("figures/species-composition-bar-plot.png", height = 5, width = 10, device= "png")
+```
+## Complement figure 5a by adding stacked bar plots of individual depth genralist corals (Galaxea and Acropora)
+```{r}
+figure5b <- filtered_bar_dat %>%
+  drop_na() %>% 
+  filter(Genus.y == "Acropora", Type != "Planula") %>% 
+  ggplot(aes(Genus.y, proportion)) +
+  facet_grid(~depth2 , scales = "free_x", space = "free_x", labeller = label_wrap_gen(width = 10))+
+  geom_bar(aes (fill= ITS2_types), stat = "identity", position = "fill", width = 0.9)+
+  scale_fill_discrete(name = NULL)+
+  scale_fill_manual(values= c("#0000FF","#00008F","#771122","#771155","#AA4488",
+                              "#AA4455","#DD7788","#114477","#4477AA","#77AADD",
+                              "#117777","#44AAAA","#117744","#44AA77","#88CCAA",
+                              "#77CCCC","#777711","#AAAA44","#AA7744","#DDAA77",
+                              "#774411","black","red"), name = "ITS2 Types" )+
+  scale_y_continuous(name = "Relative abundance",
+                     labels = scales::percent) +
+  labs(x = NULL)+
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 6))+
+  my_theme_bar
+
+
+figure5c <- filtered_bar_dat %>%
+  drop_na() %>% 
+  filter(Genus.y == "Galaxea") %>% 
+  ggplot(aes(Genus.y, proportion)) +
+  facet_grid(~depth2 , scales = "free_x", space = "free_x", labeller = label_wrap_gen(width = 10))+
+  geom_bar(aes (fill= ITS2_types), stat = "identity", position = "fill", width = 0.9)+
+  scale_fill_discrete(name = NULL)+
+  scale_fill_manual(values= c("#0000FF","#00008F","#771122","#771155","#AA4488",
+                              "#AA4455","#DD7788","#114477","#4477AA","#77AADD",
+                              "#117777","#44AAAA","#117744","#44AA77","#88CCAA",
+                              "#77CCCC","#777711","#AAAA44","#AA7744","#DDAA77",
+                              "#774411","black","red"), name = "ITS2 Types" )+
+  scale_y_continuous(name = "Relative abundance",
+                     labels = scales::percent) +
+  labs(x = NULL)+
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 6))+
+  my_theme_bar
+
+figure5 <- plot_grid(figure5a, figure5b,figure5c, rel_widths = 5, rel_heights = 10)
+figure5
+```
+
+
+
+
+## Bar plot for only A.tenuis samples to compare between Planula and Adult samples
+
+```{r}
+Figure6a <- filtered_bar_dat %>% 
+  select(SampleID, Type, Species.y, ITS2_types, count) %>% 
+  filter(Species.y == "Acropora tenuis") %>% 
+  as.data.frame() %>% 
+  ggplot(aes(Type, count))+
+  geom_bar(aes (fill= ITS2_types), stat = "identity", position = "fill", width = 0.9)+
+  scale_fill_discrete(name = NULL)+
+  scale_fill_manual(values= c("#0000FF","#00008F","#771122","#771155",
+                              "#AA4488","#AA4455","#DD7788","#114477","#4477AA",
+                              "#77AADD","#117777","#44AAAA","#117744","#44AA77",
+                              "#88CCAA","#77CCCC","#777711","#AAAA44","#DDDD77",
+                              "#AA7744","#DDAA77","black", "red"), name = "A.tenuis ITS2 Types" )+
+  scale_y_continuous(name = "Relative abundance",
+                     labels = scales::percent) +
+  labs(x = NULL)+
+  my_theme_bar 
+  
+#ggsave("figures/species-composition-bar-plot-atenuis.png", height = 4, width = 5, device= "png")
+
+```
+## Create a pichart showing compositon by coral genera
+### lets create a custom theme for this plot too.
+```{r}
+my_theme_pie <-  theme(panel.border = element_rect(colour = "black", fill = NA),
+                     #panel.background = element_blank(),
+                     #panel.grid = element_blank(),
+                     #axis.text  = element_text(size = 8), 
+                     #axis.text.x = element_text(angle = 90, face = "italic"),
+                     #axis.text.x.top = element_text(size=8),
+                     #axis.title = element_text(size = 16),
+                     strip.background = element_blank(),
+                     strip.text = element_text(size = 8),
+                     axis.line.x = element_line(size = 0.5),
+                     axis.line.y = element_line(size = 0.5),
+                     legend.position = "right",
+                     legend.title = element_text(size = 10),
+                     legend.key.size = unit(0.25, "cm"),
+                     legend.text =element_text(size =8, face = "italic"))
+```
+
+
+```{r}
+
+filtered_bar_dat %>% 
+  filter(! Type== "Planula") %>% 
+  ggplot(aes("", count, fill = ITS2_types )) +
+  geom_bar(stat = "identity", position = "fill", width = 1)+
+  coord_polar("y", start = 0)+
+ scale_fill_manual(values= c("#0000FF","#00008F","#771122","#771155",
+                              "#AA4488","#AA4455","#DD7788","#114477","#4477AA",
+                              "#77AADD","#117777","#44AAAA","#117744","#44AA77",
+                              "#88CCAA","#77CCCC","#777711","#AAAA44","#DDDD77",
+                              "#AA7744","#DDAA77","black", "red"), name = "ITS2 Types" )+
+  scale_y_continuous(name = "Relative abundance",
+                     labels = scales::percent) +
+  facet_wrap(~Genus.y, labeller=labeller(Genus.y = label_wrap_gen(width = 12)))+
+  my_theme_pie +
+  theme_void()+
+  theme(legend.title = element_text(size = 8),
+        legend.text =element_text(size =8, face = "italic"),
+        legend.key.size = unit(0.25, "cm"))
+  
+
+ggsave("figures/composition-piechart-tissue.png", height = 5, width = 10, device= "png")
+```
+## Piechart to complement Figure7a
+
+```{r}
+figure6b  <- filtered_bar_dat %>% 
+  select(SampleID, Type, Species.y, ITS2_types, count) %>% 
+  filter(Species.y == "Acropora tenuis") %>% 
+  ggplot(aes("", count, fill = ITS2_types )) +
+  geom_bar(stat = "identity", position = "fill", width = 1)+
+  coord_polar("y", start = 0)+
+ scale_fill_manual(values= c("#0000FF","#00008F","#771122","#771155",
+                              "#AA4488","#AA4455","#DD7788","#114477","#4477AA",
+                              "#77AADD","#117777","#44AAAA","#117744","#44AA77",
+                              "#88CCAA","#77CCCC","#777711","#AAAA44","#DDDD77",
+                              "#AA7744","#DDAA77","black", "red"), name = "ITS2 Types" )+
+  scale_y_continuous(name = "Relative abundance",
+                     labels = scales::percent) +
+  facet_wrap(~Type, labeller=labeller(Genus.y = label_wrap_gen(width = 12)))+
+  my_theme_pie +
+  theme_void()+
+  theme(legend.position = "none")
+
+figure6b  
+
+## Combine figure b
+figure6 <- plot_grid(Figure6a, figure6b, rel_widths = 5, rel_heights = 10)
+
+figure6
+
+ggsave("figures/figure6.png", device= "png")
+```
+
+
+
+
+
+
+# Summary Analysis
+
+## Counting the most abundant ITSTypes
+
+```{r}
+ITS2_sum_by_species <- dat_bar %>% select(FeatureID, SampleID, count, ITS2_types) %>% 
+  group_by(ITS2_types) %>% 
+  summarize(species_count = sum(count)) %>% 
+  mutate(species_percent = species_count/sum(species_count) * 100)
+
+ITS2_sum_by_species
+```
+
+### Counting the most abundant taxa after merging ITS2 types with the same names
+
+```{r}
+ITS2_merged_sum_by_species <- dat_comp %>% select(FeatureID, SampleID, count, species_name3) %>% 
+  group_by(species_name3) %>% 
+  summarize(species_count = sum(count)) %>% 
+  mutate(species_percent = species_count/sum(species_count) * 100)
+
+ITS2_merged_sum_by_species
+```
+
+# Multivariate test analysis using the phyloseq object
+
+## PERMANOVA and betadisper on unweighted unifrac distance
+
+```{r}
+uwuni <- phyloseq::distance(physeq, method = "unifrac", weighted = FALSE)  #unweighted unifrac
+
+sampleddf <- data.frame(sample_data(physeq))
+
+adonis2(formula = uwuni ~ Depth * Genus, data = sampleddf)
+
+```
+```{r}
+betatype <- betadisper(uwuni, sampleddf$Type) #check for sample Type
+anova(betatype)
+```
+
+```{r}
+betagenus <- betadisper(uwuni, sampleddf$Genus)
+anova(betagenus)
+```
+```{r}
+TukeyHSD(betagenus)
+```
+
+
+```{r}
+betadepth <- betadisper(uwuni, sampleddf$Depth)
+anova(betadepth)
+```
+
+
+```{r}
+kruskal.test(physeq)
+```
+
+#Filter Acropora tenuis samples to compare sample type because our planula are from A. tenuis only.
+
+```{r}
+ps_filt_acro <- physeq %>% 
+  subset_samples(Species == "Acropora tenuis") %>% 
+  subset_samples(sample_sums(physeq) > 0) %>% 
+  filter_taxa(function(x) sum(x) > 0, TRUE)
+```
+
+```{r}
+uwuni_acro <- phyloseq::distance(ps_filt_acro, method = "unifrac", weighted = FALSE)
+sampleddf_acro <- data.frame(sample_data(ps_filt_acro))
+adonis2(uwuni_acro ~ Type, data = sampleddf_acro)
+```
+
+## Try comparing the betdiversity if a sibngle genus found in diffrent depths
+### Galaxea
+```{r}
+ps_filt_gala <- physeq %>% 
+  subset_samples(Genus == "Galaxea") %>% 
+  subset_samples(sample_sums(physeq) > 0) %>% 
+  filter_taxa(function(x) sum(x) > 0, TRUE)
+
+uwuni_gala <- phyloseq::distance(ps_filt_gala, method = "unifrac", weighted = FALSE)
+sampleddf_gala <- data.frame(sample_data(ps_filt_gala))
+adonis2(uwuni_gala ~ Depth, data = sampleddf_gala)
+```
+
+### ACropora
+
+```{r}
+ps_filt_acrop <- physeq %>% 
+  subset_samples(Genus == "Acropora") %>% 
+  subset_samples(sample_sums(physeq) > 0) %>% 
+  filter_taxa(function(x) sum(x) > 0, TRUE)
+
+uwuni_acrop <- phyloseq::distance(ps_filt_acrop, method = "unifrac", weighted = FALSE)
+sampleddf_acrop <- data.frame(sample_data(ps_filt_acrop))
+adonis2(uwuni_acrop ~ Depth, data = sampleddf_acrop)
+```
+
+
+##Making a summary table of ITS2 tyoes by host and depth
+```{r}
+sum_dat<- dat_bar %>% 
+  group_by(ITS2_types) %>% 
+  mutate(proportion = count / sum(count))
+
+samples_types <- sum_dat %>%
+  filter(!Type == "Planula") %>% 
+  # Get clade level relative abundances
+  group_by(Species.y, depth2, ITS2_types) %>%
+  summarize(Abundance = sum(proportion)) %>%
+  group_by(Species.y, depth2) %>%
+  ungroup()
+
+significat_types <- samples_types %>% filter(Abundance >= 0.05)
+
+table_final <- significat_types %>% 
+  select(Species.y, depth2, ITS2_types) %>% 
+  drop_na(ITS2_types) %>% 
+  group_by(Species.y, depth2) %>% 
+  summarise(taxa = str_c(ITS2_types, collapse = ", "))
+
+#write.csv(table_final, file = "figures/summary_table.csv")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
